@@ -1,18 +1,26 @@
 package com.rb.recipebasket.model
 
+import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
+import org.springframework.data.relational.core.mapping.Column
+import java.time.LocalDateTime
+
 @Entity
 @Table(name = "Favorite")
-data class Favorite(
+class Favorite(
     @EmbeddedId
     val id: FavoriteId,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val notes: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne
@@ -22,10 +30,14 @@ data class Favorite(
     @ManyToOne
     @MapsId("recipeMetaDataId")
     val recipeMetaData: RecipeMetaData
-)
+) {
+    constructor() : this(FavoriteId(), "", LocalDateTime.now(), LocalDateTime.now(), User(), RecipeMetaData())
+}
 
 @Embeddable
 data class FavoriteId(
     val recipeMetaDataId: String,
     val userId: String
-)
+) {
+    constructor() : this("", "")
+}

@@ -9,10 +9,10 @@ class CorsConfig : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOrigins("*") // or specify origins like "http://localhost:3000", "https://example.com"
+            .allowedOrigins("http://localhost:8080")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true)
-            .maxAge(3600)  // how long the results of a preflight request can be cached
+            .maxAge(3600)
     }
 }

@@ -1,22 +1,28 @@
 package com.rb.recipebasket.model
 
-import javax.persistence.*
+import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
+import org.springframework.data.relational.core.mapping.Column
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "User")
-data class User(
+open class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: String,
-    
-    @Column(nullable = false)
+
+    @NotNull
+    @Column
     val email: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(nullable = false)
-    val updatedAt: LocalDateTime = LocalDateTime.now()
+    @NotNull
+    @Column
+    val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     // OneToMany relationship for favorite dishes (Favorite Entity)
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
@@ -29,4 +35,10 @@ data class User(
     // OneToMany relationship for grocery lists (GroceryList Entity)
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     val groceryLists: MutableList<GroceryList> = mutableListOf()
-)
+) {
+    constructor() : this(
+        "", "", LocalDateTime.now(), LocalDateTime.now(), mutableListOf(Favorite()), mutableListOf(
+            Rating()
+        ), mutableListOf(GroceryList())
+    )
+}

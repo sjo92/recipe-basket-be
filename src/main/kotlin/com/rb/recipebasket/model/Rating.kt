@@ -1,18 +1,26 @@
 package com.rb.recipebasket.model
 
+import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
+import org.springframework.data.relational.core.mapping.Column
+import java.time.LocalDateTime
+
 @Entity
 @Table(name = "Rating")
 data class Rating(
     @EmbeddedId
     val id: RatingId,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val comment: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne
@@ -22,10 +30,14 @@ data class Rating(
     @ManyToOne
     @MapsId("recipeMetaDataId")
     val recipeMetaData: RecipeMetaData
-)
+) {
+    constructor() : this(RatingId(), "", LocalDateTime.now(), LocalDateTime.now(), User(), RecipeMetaData())
+}
 
 @Embeddable
 data class RatingId(
     val recipeMetaDataId: String,
     val userId: String
-)
+) {
+    constructor() : this("", "")
+}

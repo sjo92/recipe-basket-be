@@ -1,5 +1,10 @@
 package com.rb.recipebasket.controller
 
+import com.rb.recipebasket.model.User
+import com.rb.recipebasket.repository.UserRepository
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
 @CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/users")
@@ -15,7 +20,14 @@ class UserController(private val userRepository: UserRepository) {
     fun getUserById(@PathVariable id: String): ResponseEntity<User> {
         val user = userRepository.findById(id)
         return user.map { ResponseEntity.ok(it) }
-                   .orElse(ResponseEntity.notFound().build())
+            .orElse(ResponseEntity.notFound().build())
+    }
+
+    @GetMapping("/{email}")
+    fun getUserByEmail(@PathVariable email: String): ResponseEntity<User> {
+        val user = userRepository.findByEmail(email)
+        return user.map { ResponseEntity.ok(it) }
+            .orElse(ResponseEntity.notFound().build())
     }
 
     @PostMapping

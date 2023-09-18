@@ -1,24 +1,35 @@
 package com.rb.recipebasket.model
 
+import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
+import org.springframework.data.relational.core.mapping.Column
+import java.time.LocalDateTime
+
 @Entity
-@Table(name = "GroceryList")
-data class GroceryList(
+@Table(name = "GroceryListItem")
+data class GroceryListItem(
     @Id
     val id: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val name: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val status: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(nullable = false)
-    val updatedAt: LocalDateTime = LocalDateTime.now()
+    @NotNull
+    @Column
+    val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne
     @JoinColumn(name = "groceryListId", nullable = false)
     val groceryList: GroceryList
-)
+) {
+    constructor() : this("", "", "", LocalDateTime.now(), LocalDateTime.now(), GroceryList())
+}

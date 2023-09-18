@@ -1,32 +1,50 @@
 package com.rb.recipebasket.model
 
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.Table
+import org.jetbrains.annotations.NotNull
+import org.springframework.data.relational.core.mapping.Column
+import java.math.BigDecimal
+import java.time.LocalDateTime
+
 @Entity
 @Table(name = "RecipeMetaData")
 data class RecipeMetaData(
     @Id
     val id: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val title: String,
 
-    @Column(nullable = false, columnDefinition = "BYTEA")
+    @NotNull
+    @Column
     val titlePhoto: ByteArray,
 
-    @Column(nullable = false, precision = 65, scale = 30)
+    @NotNull
+    @Column
     val totalRating: BigDecimal,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val difficulty: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val duration: String,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val calories: Int,
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(nullable = false)
+    @NotNull
+    @Column
     val updatedAt: LocalDateTime = LocalDateTime.now()
-)
+) {
+    constructor() : this("", "", ByteArray(0), BigDecimal(0), "", "", 0, LocalDateTime.now(), LocalDateTime.now())
+}
