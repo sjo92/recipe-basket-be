@@ -1,3 +1,5 @@
+package com.rb.recipebasket.model
+
 @Entity
 @Table(name = "Rating")
 data class Rating(

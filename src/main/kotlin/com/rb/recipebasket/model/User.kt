@@ -1,3 +1,5 @@
+package com.rb.recipebasket.model
+
 import javax.persistence.*
 
 @Entity

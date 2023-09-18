@@ -1,3 +1,5 @@
+package com.rb.recipebasket.model
+
 @Entity
 @Table(name = "GroceryList")
 data class GroceryList(
